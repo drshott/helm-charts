@@ -5,7 +5,10 @@ metadata:
   labels:
     app.kebernetes.io/name: {{ .Values.global.name }}
     app.kubernetes.io/managed-by: 'helm'
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: nginx
   rules:
     - host: {{ .Values.ingress.host }}
       http:
