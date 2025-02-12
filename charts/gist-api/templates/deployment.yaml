@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.global.name }}
+  labels:
+    app.kebernetes.io/name: {{ .Values.global.name }}
+    app.kubernetes.io/component: 'backend'
+spec:
+  replicas: {{ .Values.gistApiDeployment.replicaCount }}
+  selector:
+    matchLabels:
+      app.kebernetes.io/name: {{ .Values.global.name }}
+  template:
+    metadata:
+      labels:
+        app.kebernetes.io/name: {{ .Values.global.name }}
+    spec:
+      containers:
+        - name: {{ .Values.global.name }}
+          image: "{{ .Values.image.name }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.gistApiDeployment.containerPort }}
+              protocol: TCP
+          livenessProbe:
+            {{- toYaml .Values.gistApiDeployment.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.gistApiDeployment.readinessProbe | nindent 12 }}
+          resources:
+            {{- toYaml .Values.gistApiDeployment.resources | nindent 12 }}
