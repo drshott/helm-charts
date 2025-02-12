@@ -33,7 +33,7 @@ gistApiDeployment:
 image:
   name: vaidyaswapneel/gist-api
   pullPolicy: Always
-  tag: 21a924d9291868291fb1d5f8f286e23b1ae55a26
+  tag: 8460e9f04b6b4982a76d324ddd23ec107b1a3161
 
 ingress:
   host: gistapi.localhost
